@@ -1,4 +1,4 @@
-module ioc
+module github.com/Ignaciojeria/einar-ioc
 
 go 1.21.2
 
