@@ -1,4 +1,4 @@
-module einar-ioc
+module ioc
 
 go 1.21.2
 
