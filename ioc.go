@@ -34,11 +34,11 @@ func InjectInstallation[T any](loadableDependency func() (T, error)) *Container[
 	return &adapter
 }
 
-var Business = make(map[string]Loadable[any])
+var UseCases = make(map[string]Loadable[any])
 
-func InjectBusiness[T any](loadableDependency func() (T, error)) *Container[T] {
+func InjectUseCase[T any](loadableDependency func() (T, error)) *Container[T] {
 	adapter := Container[T]{loadableDependency: loadableDependency}
-	Business[uuid.NewString()] = &adapter
+	UseCases[uuid.NewString()] = &adapter
 	return &adapter
 }
 
@@ -71,7 +71,7 @@ func LoadDependencies() error {
 			return err
 		}
 	}
-	for _, v := range Business {
+	for _, v := range UseCases {
 		_, err := v.Load()
 		if err != nil {
 			return err
