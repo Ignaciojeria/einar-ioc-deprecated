@@ -12,7 +12,7 @@ type container[T any] struct {
 	Dependency         T
 }
 
-func (c *container[T]) load() (any, error) {
+func (c *container[T]) Load() (any, error) {
 	if c.isLoaded {
 		return nil, errors.New("dependency already loaded")
 	}
@@ -23,7 +23,7 @@ func (c *container[T]) load() (any, error) {
 }
 
 type loadable[T any] interface {
-	load() (any, error)
+	Load() (any, error)
 }
 
 var installations = make(map[string]loadable[any])
@@ -60,25 +60,25 @@ func InjectOutBoundAdapter[T any](loadableDependency func() (T, error)) *contain
 
 func LoadDependencies() error {
 	for _, v := range installations {
-		_, err := v.load()
+		_, err := v.Load()
 		if err != nil {
 			return err
 		}
 	}
 	for _, v := range outBoundAdapters {
-		_, err := v.load()
+		_, err := v.Load()
 		if err != nil {
 			return err
 		}
 	}
 	for _, v := range useCases {
-		_, err := v.load()
+		_, err := v.Load()
 		if err != nil {
 			return err
 		}
 	}
 	for _, v := range inboundAdapters {
-		_, err := v.load()
+		_, err := v.Load()
 		if err != nil {
 			return err
 		}
