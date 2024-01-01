@@ -6,13 +6,13 @@ import (
 	"github.com/google/uuid"
 )
 
-type Container[T any] struct {
+type container[T any] struct {
 	loadableDependency func() (T, error)
 	isLoaded           bool
 	Dependency         T
 }
 
-func (c *Container[T]) Load() (any, error) {
+func (c *container[T]) load() (any, error) {
 	if c.isLoaded {
 		return nil, errors.New("dependency already loaded")
 	}
@@ -22,63 +22,63 @@ func (c *Container[T]) Load() (any, error) {
 	return instance, err
 }
 
-type Loadable[T any] interface {
-	Load() (any, error)
+type loadable[T any] interface {
+	load() (any, error)
 }
 
-var Installations = make(map[string]Loadable[any])
+var installations = make(map[string]loadable[any])
 
-func InjectInstallation[T any](loadableDependency func() (T, error)) *Container[T] {
-	adapter := Container[T]{loadableDependency: loadableDependency}
-	Installations[uuid.NewString()] = &adapter
+func InjectInstallation[T any](loadableDependency func() (T, error)) *container[T] {
+	adapter := container[T]{loadableDependency: loadableDependency}
+	installations[uuid.NewString()] = &adapter
 	return &adapter
 }
 
-var UseCases = make(map[string]Loadable[any])
+var useCases = make(map[string]loadable[any])
 
-func InjectUseCase[T any](loadableDependency func() (T, error)) *Container[T] {
-	adapter := Container[T]{loadableDependency: loadableDependency}
-	UseCases[uuid.NewString()] = &adapter
+func InjectUseCase[T any](loadableDependency func() (T, error)) *container[T] {
+	adapter := container[T]{loadableDependency: loadableDependency}
+	useCases[uuid.NewString()] = &adapter
 	return &adapter
 }
 
-var InboundAdapters = make(map[string]Loadable[any])
+var inboundAdapters = make(map[string]loadable[any])
 
-func InjectInboundAdapter[T any](loadableDependency func() (T, error)) *Container[T] {
-	adapter := Container[T]{loadableDependency: loadableDependency}
-	InboundAdapters[uuid.NewString()] = &adapter
+func InjectInboundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
+	adapter := container[T]{loadableDependency: loadableDependency}
+	inboundAdapters[uuid.NewString()] = &adapter
 	return &adapter
 }
 
-var OutBoundAdapters = make(map[string]Loadable[any])
+var outBoundAdapters = make(map[string]loadable[any])
 
-func InjectOutBoundAdapter[T any](loadableDependency func() (T, error)) *Container[T] {
-	adapter := Container[T]{loadableDependency: loadableDependency}
-	OutBoundAdapters[uuid.NewString()] = &adapter
+func InjectOutBoundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
+	adapter := container[T]{loadableDependency: loadableDependency}
+	outBoundAdapters[uuid.NewString()] = &adapter
 	return &adapter
 }
 
 func LoadDependencies() error {
-	for _, v := range Installations {
-		_, err := v.Load()
+	for _, v := range installations {
+		_, err := v.load()
 		if err != nil {
 			return err
 		}
 	}
-	for _, v := range OutBoundAdapters {
-		_, err := v.Load()
+	for _, v := range outBoundAdapters {
+		_, err := v.load()
 		if err != nil {
 			return err
 		}
 	}
-	for _, v := range UseCases {
-		_, err := v.Load()
+	for _, v := range useCases {
+		_, err := v.load()
 		if err != nil {
 			return err
 		}
 	}
-	for _, v := range InboundAdapters {
-		_, err := v.Load()
+	for _, v := range inboundAdapters {
+		_, err := v.load()
 		if err != nil {
 			return err
 		}
