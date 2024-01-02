@@ -32,7 +32,7 @@ import (
 )
 func main() {
 	if err := ioc.LoadDependencies(); err != nil {
-		os.Exit(0)
+		os.Exit(1)
 	}
 }
 ```
@@ -132,5 +132,29 @@ var postCustomersDependency = ioc.InjectInboundAdapter[postCustomers](func() (po
 
 func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
 	w.Write("hello from post customer controller")
+}
+```
+
+#### 🔍 Registering Controller Package Dependencies
+
+```go
+package main
+
+import (
+	"example/chi_router"
+	"fmt"
+	"net/http"
+	"os"
+	_ "example/controller" // Automatically injects all inbound adapters registered inside the controller package
+	ioc "github.com/Ignaciojeria/einar-ioc"
+)
+
+func main() {
+	if err := ioc.LoadDependencies(); err != nil {
+		fmt.Println("Error loading dependencies:", err)
+		os.Exit(1)
+	}
+	fmt.Println("Server starting at port 8080")
+	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
 }
 ```
