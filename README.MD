@@ -42,7 +42,7 @@ func main() {
 Installations are key instances in the framework, used for a variety of infrastructure operations. These tasks include providing route instances for registering HTTP requests, initializing connections for database operations, setting up clients for event publication and reception, among others. Effectively, installations lay the groundwork for the essential services that your application relies on, ensuring their seamless integration and operation as foundational elements.
 
 ####  🔍 Create your first Installation File
-Navigate to the /chi_router folder. Inside this folder, we will create mux.go.
+Navigate to the /chi_router folder. Inside this folder, we will create mux.go
 ```bash
 /chi_router
  - mux.go #Chi Router interface Implementation 
@@ -100,7 +100,7 @@ An "Inbound Adapter" encompasses all operations that trigger an inbound action i
 
 ####  🔍 Create your first Inbound Adapter File
 
-Navigate to the /controller folder. Inside this folder, we will create post_customer.go.
+Navigate to the /controller folder. Inside this folder, we will create post_customer.go
 ```bash
 /controller
  - post_customer.go 
@@ -166,7 +166,7 @@ Use cases are specialized functions designed to execute business logic. They han
 
 ####  🔍 Create your first Usecase File
 
-Navigate to the /usecase folder. Inside this folder, we will create create_customer.go.
+Navigate to the /usecase folder. Inside this folder, we will create create_customer.go
 ```bash
 /controller
  - create_customer.go 
