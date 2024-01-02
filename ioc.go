@@ -28,7 +28,7 @@ type loadable[T any] interface {
 
 var installations = make(map[string]loadable[any])
 
-func InjectInstallation[T any](loadableDependency func() (T, error)) *container[T] {
+func Installation[T any](loadableDependency func() (T, error)) *container[T] {
 	adapter := container[T]{loadableDependency: loadableDependency}
 	installations[uuid.NewString()] = &adapter
 	return &adapter
@@ -36,7 +36,7 @@ func InjectInstallation[T any](loadableDependency func() (T, error)) *container[
 
 var useCases = make(map[string]loadable[any])
 
-func InjectUseCase[T any](loadableDependency func() (T, error)) *container[T] {
+func UseCase[T any](loadableDependency func() (T, error)) *container[T] {
 	adapter := container[T]{loadableDependency: loadableDependency}
 	useCases[uuid.NewString()] = &adapter
 	return &adapter
@@ -44,7 +44,7 @@ func InjectUseCase[T any](loadableDependency func() (T, error)) *container[T] {
 
 var inboundAdapters = make(map[string]loadable[any])
 
-func InjectInboundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
+func InboundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
 	adapter := container[T]{loadableDependency: loadableDependency}
 	inboundAdapters[uuid.NewString()] = &adapter
 	return &adapter
@@ -52,7 +52,7 @@ func InjectInboundAdapter[T any](loadableDependency func() (T, error)) *containe
 
 var outBoundAdapters = make(map[string]loadable[any])
 
-func InjectOutBoundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
+func OutBoundAdapter[T any](loadableDependency func() (T, error)) *container[T] {
 	adapter := container[T]{loadableDependency: loadableDependency}
 	outBoundAdapters[uuid.NewString()] = &adapter
 	return &adapter
