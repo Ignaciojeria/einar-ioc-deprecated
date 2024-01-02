@@ -7,13 +7,13 @@ To install ioc, use the following command:
 
 ## 🔍 Tutorial : Before start
 
-The dependencies in the framework are loaded in a specific sequence, as follows:
+The dependencies in the framework are registered in a specific sequence, as follows:
 1. Installations
 2. Outbound Adapters
 3. Use Cases
 4. Inbound Adapters
 
-This sequence ensures that each component is loaded in the correct order for optimal functionality. The diagram below illustrates this dependency loading process:
+This sequence ensures that each component is registered in the correct order for optimal functionality. The diagram below illustrates this dependency registry process:
 
 <p align="center">
   <img src="diagram.drawio.svg" alt="Diagram">
@@ -37,7 +37,7 @@ func main() {
 }
 ```
 
-## 👨‍💻 Injecting your first Installation
+## 👨‍💻 Registering your first Installation
 
 Installations are key instances in the framework, used for a variety of infrastructure operations. These tasks include providing route instances for registering HTTP requests, initializing connections for database operations, setting up brokers for event publication and reception, among others. Effectively, installations lay the groundwork for the essential services that your application relies on, ensuring their seamless integration and operation as foundational elements.
 
@@ -71,7 +71,7 @@ var Mux = ioc.InjectInstallation[*chi.Mux](func() (*chi.Mux, error) {
 
 ```
 
-####  🔍 Starting the Server with an Installation
+####  🔍 Starting The Server With An Registered Installation
 ```go
 package main
 
@@ -93,7 +93,7 @@ func main() {
 }
 ```
 
-## 👨‍💻 Injecting your first Inbound Adapter
+## 👨‍💻 Registering your first Inbound Adapter & Installation Injection
 
 An "Inbound Adapter" encompasses all operations that trigger an inbound action in the system. This includes scenarios such as receiving an HTTP request from an external client or consuming an event published by an external producer. These adapters serve as the entry points for external inputs, ensuring that your system can respond and interact with external stimuli, such as client requests or external events, effectively integrating them into your system's workflow.
 
@@ -135,7 +135,7 @@ func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-#### 🔍 Registering Controller Package Dependencies
+#### 🔍 Discovery Controller Package Dependencies
 
 ```go
 package main
