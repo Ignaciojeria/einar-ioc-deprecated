@@ -13,7 +13,7 @@ type updateBKeyUsecase struct {
 
 type IUpdateBKey func(value string)
 
-var UpdateBKey = ioc.InjectUseCase[IUpdateBKey](func() (IUpdateBKey, error) {
+var UpdateBKey = ioc.UseCase[IUpdateBKey](func() (IUpdateBKey, error) {
 	usecase := updateBKeyUsecase{
 		kvDB:          kvdatabase.KVDB.Dependency,
 		getCurrentKey: GetCurrentKey.Dependency,

@@ -14,12 +14,14 @@ type getCurrentKeyController struct {
 	getCurrentKey usecase.IgetCurrentKey
 }
 
-var getCurrentKeyControllerDependency = ioc.InjectInboundAdapter[getCurrentKeyController](func() (getCurrentKeyController, error) {
+var getCurrentKeyControllerDependency = ioc.InboundAdapter[getCurrentKeyController](func() (getCurrentKeyController, error) {
 	controller := getCurrentKeyController{
 		router:        chi_router.Mux.Dependency,
 		getCurrentKey: usecase.GetCurrentKey.Dependency,
 	}
-	controller.router.Get("/getKeys", controller.handle)
+	if controller.router != nil {
+		controller.router.Get("/getKeys", controller.handle)
+	}
 	return controller, nil
 })
 

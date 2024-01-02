@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-var Mux = ioc.InjectInstallation[*chi.Mux](func() (*chi.Mux, error) {
+var Mux = ioc.Installation[*chi.Mux](func() (*chi.Mux, error) {
 	r := chi.NewRouter()
 	// A good base middleware stack
 	r.Use(middleware.RequestID)

@@ -14,7 +14,7 @@ type setKeyBcontroller struct {
 	updateBKey usecase.IUpdateBKey
 }
 
-var setKeyBcontrollerDependency = ioc.InjectInboundAdapter[setKeyBcontroller](func() (setKeyBcontroller, error) {
+var setKeyBcontrollerDependency = ioc.InboundAdapter[setKeyBcontroller](func() (setKeyBcontroller, error) {
 	controller := setKeyBcontroller{
 		router:     chi_router.Mux.Dependency,
 		updateBKey: usecase.UpdateBKey.Dependency,

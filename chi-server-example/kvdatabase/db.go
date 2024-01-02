@@ -4,7 +4,7 @@ import ioc "github.com/Ignaciojeria/einar-ioc"
 
 type IKVDB map[string]string
 
-var KVDB = ioc.InjectOutBoundAdapter[IKVDB](func() (IKVDB, error) {
+var KVDB = ioc.OutBoundAdapter[IKVDB](func() (IKVDB, error) {
 	return map[string]string{}, nil
 })
 

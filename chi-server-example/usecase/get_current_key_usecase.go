@@ -12,7 +12,7 @@ type getCurrentKeyUsecase struct {
 
 type IgetCurrentKey func(key string) string
 
-var GetCurrentKey = ioc.InjectUseCase[IgetCurrentKey](func() (IgetCurrentKey, error) {
+var GetCurrentKey = ioc.UseCase[IgetCurrentKey](func() (IgetCurrentKey, error) {
 	usecase := getCurrentKeyUsecase{
 		kvDB: kvdatabase.KVDB.Dependency,
 	}
