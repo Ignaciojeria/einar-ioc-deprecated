@@ -42,9 +42,9 @@ func main() {
 Installations are key instances in the framework, used for a variety of infrastructure operations. These tasks include providing route instances for registering HTTP requests, initializing connections for database operations, setting up brokers for event publication and reception, among others. Effectively, installations lay the groundwork for the essential services that your application relies on, ensuring their seamless integration and operation as foundational elements.
 
 ####  🔍 Create your first Installation File
-Navigate to the /server folder. Inside this folder, we will create mux.go.
+Navigate to the /chi_router folder. Inside this folder, we will create mux.go.
 ```bash
-/server
+/chi_router
  - mux.go #Chi Router interface Implementation 
 ```
 
@@ -76,7 +76,7 @@ var Mux = ioc.InjectInstallation[*chi.Mux](func() (*chi.Mux, error) {
 package main
 
 import (
-	"example/server"
+	"example/chi_router"
 	"fmt"
 	"net/http"
 	"os"
@@ -89,6 +89,6 @@ func main() {
 		os.Exit(0)
 	}
 	fmt.Println("server starting at port 8080")
-	http.ListenAndServe(":8080", server.Mux.Dependency)
+	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
 }
 ```
