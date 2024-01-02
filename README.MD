@@ -92,3 +92,45 @@ func main() {
 	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
 }
 ```
+
+## 👨‍💻 Injecting your first Inbound Adapter
+
+An "Inbound Adapter" encompasses all operations that trigger an inbound action in the system. This includes scenarios such as receiving an HTTP request from an external client or consuming an event published by an external producer. These adapters serve as the entry points for external inputs, ensuring that your system can respond and interact with external stimuli, such as client requests or external events, effectively integrating them into your system's workflow.
+
+####  🔍 Create your first Inbound Adapter File
+
+Navigate to the /controller folder. Inside this folder, we will create post_customer.go.
+```bash
+/controller
+ - post_customer.go 
+```
+
+####  🔍 Inbound Adapter File Implementation
+
+```bash
+package controller
+
+import (
+	"example/chi_router"
+	"net/http"
+
+	ioc "github.com/Ignaciojeria/einar-ioc"
+	"github.com/go-chi/chi/v5"
+)
+
+type postCustomers struct {
+	router *chi.Mux
+}
+
+var postCustomersDependency = ioc.InjectInboundAdapter[postCustomers](func() (postCustomers, error) {
+	controller := postCustomers{
+		router: chi_router.Mux.Dependency,
+	}
+	controller.router.Post("/person", controller.handle)
+	return controller, nil
+})
+
+func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
+	w.Write("hello from post customer controller")
+}
+```bash
