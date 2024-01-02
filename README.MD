@@ -7,6 +7,10 @@ To install ioc, use the following command:
 
 ## :computer: Usage
 
+<p align="center">
+  <img src="diagram.drawio.svg" alt="Diagram">
+</p>
+
 ```go
 package main
 
@@ -19,6 +23,3 @@ func main() {
 		os.Exit(0)
 	}
 }
-```
-
-![Diagram](diagram.drawio.svg)
