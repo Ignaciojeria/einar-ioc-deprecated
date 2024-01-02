@@ -48,7 +48,7 @@ Navigate to the /chi_router folder. Inside this folder, we will create mux.go.
  - mux.go #Chi Router interface Implementation 
 ```
 
-####  🔍 Instalation File Implementation
+####  🔍 mux.go Implementation
 We will be using the Chi Framework (https://github.com/go-chi/chi) and injecting the Chi router using IOC.
 ```bash
 package chi_router
