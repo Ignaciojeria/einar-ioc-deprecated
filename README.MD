@@ -105,7 +105,7 @@ Navigate to the /controller folder. Inside this folder, we will create post_cust
  - post_customer.go 
 ```
 
-####  🔍 Inbound Adapter File Implementation
+####  🔍 post_customer.go Implementation
 
 ```go
 package controller
