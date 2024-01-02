@@ -145,7 +145,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	_ "example/controller" // Automatically injects all inbound adapters registered inside the controller package
+	_ "example/controller" // Required to discover all inbound adapters registered inside the controller package
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
