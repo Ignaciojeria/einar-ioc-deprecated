@@ -7,6 +7,8 @@ To install ioc, use the following command:
 
 ## :computer: Usage
 
+As a first step, we'll make sure that the `main` function loads all the dependencies we will inject later on. This initial loading of dependencies is crucial for setting up our Dependency Injection framework.
+
 <p align="center">
   <img src="diagram.drawio.svg" alt="Diagram">
 </p>
