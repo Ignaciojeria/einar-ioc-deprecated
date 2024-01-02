@@ -118,21 +118,22 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-type postCustomers struct {
+type postCustomer struct {
 	router *chi.Mux
 }
 
-var postCustomersDependency = ioc.InboundAdapter[postCustomers](func() (postCustomers, error) {
-	controller := postCustomers{
+var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
+	controller := postCustomer{
 		router: chi_router.Mux.Dependency, // Installation Dependency Injected Here!
 	}
-	controller.router.Post("/person", controller.handle)
+	controller.router.Post("/customers", controller.handle)
 	return controller, nil
 })
 
-func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
+func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("hello from post customer controller"))
 }
+
 ```
 
 #### 🔍 Discovery Controller Package Dependencies
