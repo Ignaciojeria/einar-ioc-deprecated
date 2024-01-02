@@ -16,7 +16,7 @@ The dependencies in the framework are registered in a specific sequence, as foll
 This sequence ensures that each component is registered in the correct order for optimal functionality. The diagram below illustrates this dependency registry process:
 
 <p align="center">
-  <img src="diagram.drawio.svg" alt="Diagram">
+  <img src="diagram.drawio.svg" alt="diagram">
 </p>
 
 ## 👨‍💻 Setup
