@@ -72,7 +72,7 @@ var Mux = ioc.InjectInstallation[*chi.Mux](func() (*chi.Mux, error) {
 ```
 
 ####  🔍 Starting the Server with an Installation
-```bash
+```go
 package main
 
 import (
@@ -107,7 +107,7 @@ Navigate to the /controller folder. Inside this folder, we will create post_cust
 
 ####  🔍 Inbound Adapter File Implementation
 
-```bash
+```go
 package controller
 
 import (
