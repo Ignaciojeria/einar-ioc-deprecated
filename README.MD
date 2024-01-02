@@ -7,11 +7,19 @@ To install ioc, use the following command:
 
 ## :computer: Usage
 
-As a first step, we'll make sure that the `main` function loads all the dependencies we will inject later on. This initial loading of dependencies is crucial for setting up our Dependency Injection framework.
+The dependencies in the framework are loaded in a specific sequence, as follows:
+1. Installations
+2. Outbound Adapters
+3. Use Cases
+4. Inbound Adapters
+
+This sequence ensures that each component is loaded in the correct order for optimal functionality. The diagram below illustrates this dependency loading process:
 
 <p align="center">
   <img src="diagram.drawio.svg" alt="Diagram">
 </p>
+
+As a first step, we'll make sure that the `main` function loads all the dependencies we will inject later on. This initial loading of dependencies is crucial for setting up our Dependency Injection framework.
 
 ```go
 package main
