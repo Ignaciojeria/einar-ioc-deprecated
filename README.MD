@@ -35,3 +35,8 @@ func main() {
 		os.Exit(0)
 	}
 }
+## 🔧 Injecting your first Installation
+
+Installations are key instances in the framework, used for a variety of infrastructure operations. These tasks include providing route instances for registering HTTP requests, initializing connections for database operations, setting up brokers for event publication and reception, among others. Effectively, installations lay the groundwork for the essential services that your application relies on, ensuring their seamless integration and operation as foundational elements.
+
+
