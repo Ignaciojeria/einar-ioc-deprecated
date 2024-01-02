@@ -49,7 +49,7 @@ Navigate to the /chi_router folder. Inside this folder, we will create mux.go.
 ```
 
 ####  🔍 mux.go Implementation
-We will be using the Chi Framework (https://github.com/go-chi/chi) and registering the Chi router using IOC.
+We will be using the Chi Router (https://github.com/go-chi/chi) and registering the Chi router using IOC.
 ```go
 package chi_router
 
