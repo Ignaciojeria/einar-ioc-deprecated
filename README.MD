@@ -58,7 +58,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 )
-
+// Registered installation
 var Mux = ioc.Installation[*chi.Mux](func() (*chi.Mux, error) {
 	r := chi.NewRouter()
 	// A good base middleware stack
@@ -89,11 +89,12 @@ func main() {
 		os.Exit(0)
 	}
 	fmt.Println("server starting at port 8080")
+	// Retrieving the registered installation to start the server
 	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
 }
 ```
 
-## 👨‍💻 Registering your first Inbound Adapter & Installation Injection
+## 👨‍💻 Inbound Adapter Registration & Installation Injection
 
 An "Inbound Adapter" encompasses all operations that trigger an inbound action in the system. This includes scenarios such as receiving an HTTP request from an external client or consuming an event published by an external producer. These adapters serve as the entry points for external inputs, ensuring that your system can respond and interact with external stimuli, such as client requests or external events, effectively integrating them into your system's workflow.
 
@@ -157,5 +158,42 @@ func main() {
 	}
 	fmt.Println("Server starting at port 8080")
 	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
+}
+```
+
+## 👨‍💻 Usecase Registration & Injection
+Use cases are specialized functions designed to execute business logic. They handle key operations aligning with business goals
+
+####  🔍 Create your first Usecase File
+
+Navigate to the /usecase folder. Inside this folder, we will create create_customer.go.
+```bash
+/controller
+ - create_customer.go 
+```
+
+####  🔍 create_customer.go Implementation
+```go
+package usecase
+
+import (
+	ioc "github.com/Ignaciojeria/einar-ioc"
+)
+
+type createCustomer struct {
+}
+
+// exposed method signature
+type ICreateCustomer func(customerName string)
+
+var GetCurrentKey = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
+	usecase := createCustomer{}
+	//returning exposed method to be injected that match with method signature
+	return usecase.execute, nil
+})
+
+// exposed method implementation
+func (u createCustomer) execute(customerName string) {
+	// TODO : CUSTOMER CREATION PROCESS
 }
 ```
