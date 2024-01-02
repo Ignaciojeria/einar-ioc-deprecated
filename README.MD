@@ -124,7 +124,7 @@ type postCustomers struct {
 
 var postCustomersDependency = ioc.InjectInboundAdapter[postCustomers](func() (postCustomers, error) {
 	controller := postCustomers{
-		router: chi_router.Mux.Dependency,
+		router: chi_router.Mux.Dependency, // Installation Dependency Injected Here!
 	}
 	controller.router.Post("/person", controller.handle)
 	return controller, nil
@@ -133,4 +133,4 @@ var postCustomersDependency = ioc.InjectInboundAdapter[postCustomers](func() (po
 func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
 	w.Write("hello from post customer controller")
 }
-```bash
+```
