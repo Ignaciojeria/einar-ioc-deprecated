@@ -3,7 +3,7 @@
 ## 🔧 Installation
 To install ioc, use the following command:
 
-    go get github.com/Ignaciojeria/einar-ioc@v1.3.0
+    go get github.com/Ignaciojeria/einar-ioc@1.4.0
 
 ## 🔍 Tutorial : Before start
 
@@ -13,7 +13,7 @@ The dependencies in the framework are registered in a specific sequence, as foll
 3. Use Cases
 4. Inbound Adapters
 
-This sequence ensures that each component is registered in the correct order for optimal functionality. The diagram below illustrates this dependency registry process:
+This sequence ensures that each component is registered in the correct order for optimal functionality. The diagram below illustrates this dependency registry order:
 
 <p align="center">
   <img src="diagram.drawio.svg" alt="diagram">
@@ -59,7 +59,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-var Mux = ioc.InjectInstallation[*chi.Mux](func() (*chi.Mux, error) {
+var Mux = ioc.Installation[*chi.Mux](func() (*chi.Mux, error) {
 	r := chi.NewRouter()
 	// A good base middleware stack
 	r.Use(middleware.RequestID)
@@ -122,16 +122,16 @@ type postCustomers struct {
 	router *chi.Mux
 }
 
-var postCustomersDependency = ioc.InjectInboundAdapter[postCustomers](func() (postCustomers, error) {
+var postCustomersDependency = ioc.InboundAdapter[postCustomers](func() (postCustomers, error) {
 	controller := postCustomers{
-		router: chi_router.Mux.Dependency, // Installation Dependency Injected Here!
+		router: chi_router.Mux.Dependency,
 	}
 	controller.router.Post("/person", controller.handle)
 	return controller, nil
 })
 
 func (ctrl postCustomers) handle(w http.ResponseWriter, r *http.Request) {
-	w.Write("hello from post customer controller")
+	w.Write([]byte("hello from post customer controller"))
 }
 ```
 
