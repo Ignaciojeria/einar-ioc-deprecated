@@ -94,7 +94,7 @@ func main() {
 }
 ```
 
-## 👨‍💻 Inbound Adapter Registration & Installation Injection
+## 👨‍💻 Inbound Adapter Registration
 
 An "Inbound Adapter" encompasses all operations that trigger an inbound action in the system. This includes scenarios such as receiving an HTTP request from an external client or consuming an event published by an external producer. These adapters serve as the entry points for external inputs, ensuring that your system can respond and interact with external stimuli, such as client requests or external events, effectively integrating them into your system's workflow.
 
