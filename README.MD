@@ -185,20 +185,20 @@ import (
 type createCustomer struct {
 }
 
-// usecase interface
+// Usecase interface
 type ICreateCustomer interface {
 	Execute(customerName string)
 }
 
+// [ICreateCustomer] is a generic type that is flexible and can be specified by you.
 var CreateCustomer = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
 	usecase := createCustomer{}
-	//returning exposed method to be injected that match with method signature
+	// Returning an exposed structure to be injected, which matches the specified interface.
 	return usecase, nil
 })
 
-// exposed method implementation
+// Implementation of an exposed method that matches the method signature of the interface.
 func (u createCustomer) Execute(customerName string) {
-
 	fmt.Println("Customer name to create : " + customerName)
 	// TODO : CUSTOMER CREATION PROCESS
 }
@@ -220,19 +220,20 @@ import (
 
 type postCustomer struct {
 	router         *chi.Mux
-	createCustomer usecase.ICreateCustomer // UsecaseInterface exposed by IOC
+	createCustomer usecase.ICreateCustomer // [ICreateCustomer] exposed by the IOC container
 }
 
 var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
 	controller := postCustomer{
 		router:         chi_router.Mux.Dependency,         // Installation Dependency Injected Here!
-		createCustomer: usecase.CreateCustomer.Dependency, // Usecase Dependency Injected Here that match with interface!
+		createCustomer: usecase.CreateCustomer.Dependency, // [ICreateCustomer] use case dependency is injected here!"
 	}
 	controller.router.Post("/customers", controller.handle)
 	return controller, nil
 })
 
 func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
+	// Here, we are calling the injected dependency.
 	ctrl.createCustomer.Execute("juan")
 	w.Write([]byte("customer created"))
 }
