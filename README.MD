@@ -177,6 +177,8 @@ Navigate to the /usecase folder. Inside this folder, we will create create_custo
 package usecase
 
 import (
+	"fmt"
+
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
@@ -186,7 +188,7 @@ type createCustomer struct {
 // exposed method signature
 type ICreateCustomer func(customerName string)
 
-var GetCurrentKey = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
+var CreateCustomer = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
 	usecase := createCustomer{}
 	//returning exposed method to be injected that match with method signature
 	return usecase.execute, nil
@@ -194,6 +196,42 @@ var GetCurrentKey = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error)
 
 // exposed method implementation
 func (u createCustomer) execute(customerName string) {
+
+	fmt.Println("Customer name to create : " + customerName)
 	// TODO : CUSTOMER CREATION PROCESS
+}
+```
+
+####  🔍 Injecting Usecase inside inbound adapter
+```go
+package controller
+
+import (
+	"example/chi_router"
+	"example/usecase"
+	"net/http"
+
+	ioc "github.com/Ignaciojeria/einar-ioc"
+	"github.com/go-chi/chi/v5"
+)
+
+type postCustomer struct {
+	router         *chi.Mux
+	createCustomer usecase.ICreateCustomer
+}
+
+var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
+	controller := postCustomer{
+		router:         chi_router.Mux.Dependency,         // Installation Dependency Injected Here!
+		createCustomer: usecase.CreateCustomer.Dependency, // Usecase Dependency Injected Here!
+	}
+	controller.router.Post("/customers", controller.handle)
+	return controller, nil
+})
+
+func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
+	//we can call dependency injected here
+	ctrl.createCustomer("juan")
+	w.Write([]byte("customer created"))
 }
 ```
