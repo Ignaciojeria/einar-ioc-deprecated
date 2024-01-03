@@ -59,7 +59,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 // Registered installation
-var Mux = ioc.Installation[*chi.Mux](func() (*chi.Mux, error) {
+var MuxContainer = ioc.Installation[*chi.Mux](func() (*chi.Mux, error) {
 	r := chi.NewRouter()
 	// A good base middleware stack
 	r.Use(middleware.RequestID)
@@ -90,7 +90,7 @@ func main() {
 	}
 	fmt.Println("server starting at port 8080")
 	// Retrieving the registered installation to start the server
-	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
+	http.ListenAndServe(":8080", chi_router.MuxContainer.Dependency)
 }
 ```
 
@@ -125,7 +125,7 @@ type postCustomer struct {
 var postCustomerContainer = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
 	controller := postCustomer{}
 	 // Installation Dependency retrieved Here!
-	chi_router.Mux.Dependency.Post("/customers", controller.handle)
+	chi_router.MuxContainer.Dependency.Post("/customers", controller.handle)
 	return controller, nil
 })
 func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
@@ -153,7 +153,7 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println("Server starting at port 8080")
-	http.ListenAndServe(":8080", chi_router.Mux.Dependency)
+	http.ListenAndServe(":8080", chi_router.MuxContainer.Dependency)
 }
 ```
 
@@ -224,7 +224,7 @@ var postCustomerContainer = ioc.InboundAdapter[postCustomer](func() (postCustome
 		createCustomer: usecase.CreateCustomerContainer.Dependency, 
 	}
 	// Installation Dependency retrieved Here!
-	chi_router.Mux.Dependency.Post("/customers", controller.handle)
+	chi_router.MuxContainer.Dependency.Post("/customers", controller.handle)
 	return controller, nil
 })
 
