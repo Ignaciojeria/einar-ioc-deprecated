@@ -120,21 +120,17 @@ import (
 )
 
 type postCustomer struct {
-	router *chi.Mux
 }
 
 var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
-	controller := postCustomer{
-		router: chi_router.Mux.Dependency, // Installation Dependency Injected Here!
-	}
-	controller.router.Post("/customers", controller.handle)
+	controller := postCustomer{}
+	 // Installation Dependency retrieved Here!
+	chi_router.Mux.Dependency.Post("/customers", controller.handle)
 	return controller, nil
 })
-
 func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("hello from post customer controller"))
 }
-
 ```
 
 #### 🔍 Discovery Controller Package Dependencies
@@ -219,16 +215,16 @@ import (
 )
 
 type postCustomer struct {
-	router         *chi.Mux
 	createCustomer usecase.ICreateCustomer // [ICreateCustomer] exposed by the IOC container
 }
 
 var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
-	controller := postCustomer{
-		router:         chi_router.Mux.Dependency,         // Installation Dependency Injected Here!
-		createCustomer: usecase.CreateCustomer.Dependency, // [ICreateCustomer] use case dependency is injected here!
+	controller := postCustomer{      
+		// [ICreateCustomer] use case dependency is injected here!
+		createCustomer: usecase.CreateCustomer.Dependency, 
 	}
-	controller.router.Post("/customers", controller.handle)
+	// Installation Dependency retrieved Here!
+	chi_router.Mux.Dependency.Post("/customers", controller.handle)
 	return controller, nil
 })
 
