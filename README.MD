@@ -185,17 +185,19 @@ import (
 type createCustomer struct {
 }
 
-// exposed method signature
-type ICreateCustomer func(customerName string)
+// usecase interface
+type ICreateCustomer interface {
+	Execute(customerName string)
+}
 
 var CreateCustomer = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
 	usecase := createCustomer{}
 	//returning exposed method to be injected that match with method signature
-	return usecase.execute, nil
+	return usecase, nil
 })
 
 // exposed method implementation
-func (u createCustomer) execute(customerName string) {
+func (u createCustomer) Execute(customerName string) {
 
 	fmt.Println("Customer name to create : " + customerName)
 	// TODO : CUSTOMER CREATION PROCESS
@@ -203,6 +205,7 @@ func (u createCustomer) execute(customerName string) {
 ```
 
 ####  🔍 Injecting Usecase inside inbound adapter
+
 ```go
 package controller
 
@@ -217,21 +220,20 @@ import (
 
 type postCustomer struct {
 	router         *chi.Mux
-	createCustomer usecase.ICreateCustomer
+	createCustomer usecase.ICreateCustomer // UsecaseInterface exposed by IOC
 }
 
 var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
 	controller := postCustomer{
 		router:         chi_router.Mux.Dependency,         // Installation Dependency Injected Here!
-		createCustomer: usecase.CreateCustomer.Dependency, // Usecase Dependency Injected Here!
+		createCustomer: usecase.CreateCustomer.Dependency, // Usecase Dependency Injected Here that match with interface!
 	}
 	controller.router.Post("/customers", controller.handle)
 	return controller, nil
 })
 
 func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
-	//we can call dependency injected here
-	ctrl.createCustomer("juan")
+	ctrl.createCustomer.Execute("juan")
 	w.Write([]byte("customer created"))
 }
 ```
