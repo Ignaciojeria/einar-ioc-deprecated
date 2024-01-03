@@ -122,7 +122,7 @@ import (
 type postCustomer struct {
 }
 
-var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
+var postCustomerContainer = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
 	controller := postCustomer{}
 	 // Installation Dependency retrieved Here!
 	chi_router.Mux.Dependency.Post("/customers", controller.handle)
@@ -187,7 +187,7 @@ type ICreateCustomer interface {
 }
 
 // [ICreateCustomer] is a generic type that is flexible and can be specified by you.
-var CreateCustomer = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
+var CreateCustomerContainer = ioc.UseCase[ICreateCustomer](func() (ICreateCustomer, error) {
 	usecase := createCustomer{}
 	// Returning an exposed structure to be injected, which matches the specified interface.
 	return usecase, nil
@@ -218,10 +218,10 @@ type postCustomer struct {
 	createCustomer usecase.ICreateCustomer // [ICreateCustomer] exposed by the IOC container
 }
 
-var postCustomerDependency = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
+var postCustomerContainer = ioc.InboundAdapter[postCustomer](func() (postCustomer, error) {
 	controller := postCustomer{      
 		// [ICreateCustomer] use case dependency is injected here!
-		createCustomer: usecase.CreateCustomer.Dependency, 
+		createCustomer: usecase.CreateCustomerContainer.Dependency, 
 	}
 	// Installation Dependency retrieved Here!
 	chi_router.Mux.Dependency.Post("/customers", controller.handle)
