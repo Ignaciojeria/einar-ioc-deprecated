@@ -200,7 +200,7 @@ func (u createCustomer) Execute(customerName string) {
 }
 ```
 
-####  🔍 Injecting Usecase inside inbound adapter
+####  🔍 Injecting Usecase inside HTTP inbound adapter
 
 ```go
 package controller
