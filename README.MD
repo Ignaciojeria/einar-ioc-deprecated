@@ -46,10 +46,13 @@ Navigate to the /chi_router folder. Inside this folder, we will create mux.go
 ```bash
 /chi_router
  - mux.go #Chi Router interface Implementation 
-```
+``` 
 
 ####  🔍 mux.go Implementation
 We will be using the Chi Router (https://github.com/go-chi/chi) and registering the Chi router using IOC.
+
+	go get -u github.com/go-chi/chi/v5 
+	
 ```go
 package chi_router
 
@@ -234,3 +237,7 @@ func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("customer created"))
 }
 ```
+
+## 👨‍💻 Memory Database Installation Registration
+
+We will be using the hashicorp memdb (https://github.com/hashicorp/go-memdb) and registering the memdb using IOC.
