@@ -243,3 +243,36 @@ func (ctrl postCustomer) handle(w http.ResponseWriter, r *http.Request) {
 We will be using the hashicorp memdb (https://github.com/hashicorp/go-memdb) and registering the memdb using IOC.
 
 	go get github.com/hashicorp/go-memdb
+
+```go
+package db
+
+import (
+	ioc "github.com/Ignaciojeria/einar-ioc"
+	"github.com/hashicorp/go-memdb"
+)
+
+var MemDBContainer = ioc.Installation[*memdb.MemDB](func() (*memdb.MemDB, error) {
+	// Create the DB schema
+	schema := &memdb.DBSchema{
+		Tables: map[string]*memdb.TableSchema{
+			"customer": {
+				Name: "customer",
+				Indexes: map[string]*memdb.IndexSchema{
+					"id": {
+						Name:    "id",
+						Unique:  true,
+						Indexer: &memdb.StringFieldIndex{Field: "ID"},
+					},
+					"name": {
+						Name:    "name",
+						Unique:  false,
+						Indexer: &memdb.IntFieldIndex{Field: "Name"},
+					},
+				},
+			},
+		},
+	}
+	return memdb.NewMemDB(schema)
+})
+```
