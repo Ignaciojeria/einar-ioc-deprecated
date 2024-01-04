@@ -98,7 +98,7 @@ func main() {
 
 An "Inbound Adapter" encompasses all operations that trigger an inbound action in the system. This includes scenarios such as receiving an HTTP request from an external client or consuming an event published by an external producer. These adapters serve as the entry points for external inputs, ensuring that your system can respond and interact with external stimuli, such as client requests or external events, effectively integrating them into your system's workflow.
 
-####  🔍 Create your first Inbound Adapter File
+####  🔍 Create your first HTTP Inbound Adapter File
 
 Navigate to the /controller folder. Inside this folder, we will create post_customer.go
 ```bash
