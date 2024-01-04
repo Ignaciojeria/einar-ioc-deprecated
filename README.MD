@@ -1,5 +1,7 @@
 # Golang Dependency Injection Framework🔥
 
+:warning: UNDER EXPERIMENTATION, WE ARE GOING TO REMOVE GLOBAL VARIABLES EXPORTATION
+
 ## 🔧 Installation
 To install ioc, use the following command:
 
